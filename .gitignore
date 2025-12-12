@@ -1,0 +1,16 @@
+# Node.js
+node_modules/
+dist/
+
+# Terraform
+*.tfstate
+*.tfstate.backup
+.terraform/
+terraform.tfvars   # <-- aquí van tus variables sensibles
+*.tfvars.json
+
+# VSCode
+.vscode/
+
+# Logs
+*.log
