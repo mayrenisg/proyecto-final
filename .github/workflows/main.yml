@@ -1,0 +1,44 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    name: Terraform Plan & Apply
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Clonar el repo
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Configurar Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.0  # Cambia a tu versión si quieres
+
+      # 3. Inicializar Terraform
+      - name: Terraform Init
+        run: terraform init
+
+      # 4. Revisar cambios (plan)
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+
+      # 5. Aplicar cambios (solo si quieres automático)
+      #    O puedes quitarlo y aplicar manual
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
