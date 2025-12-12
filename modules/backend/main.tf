@@ -33,7 +33,7 @@ resource "azurerm_network_interface_security_group_association" "backend_nic_nsg
   network_security_group_id = azurerm_network_security_group.backend_nsg.id
 }
 
-//prueba para workflow CI/CD
+//prueba p2
 resource "azurerm_linux_virtual_machine" "backend_vm" {
   name                = "backend-vm"
   location            = var.location
